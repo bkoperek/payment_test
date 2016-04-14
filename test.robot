@@ -1,5 +1,5 @@
 *** Settings ***
-Library    verify_payment.Payment_Verifier
+Library    verify_payment.PaymentVerifier
 *** Test Cases ***
 Test Payment
     [Documentation]    Author: Bartosz Koperek
@@ -13,8 +13,8 @@ Test Payment
 
 *** Keywords ***
 I make a booking from '${flight_from}' to '${flight_to}' on '${flight_date}' for '${adults_number}' adults and '${children_number}' child
-    verify_payment.Payment_Verifier.fill_in_flight_details    ${flight_from}    ${flight_to}    ${flight_date}    ${adults_number}    ${children_number}
+    verify_payment.PaymentVerifier.fill_in_flight_details    ${flight_from}    ${flight_to}    ${flight_date}    ${adults_number}    ${children_number}
 I pay for booking with card details '${card_number}', '${card_expiration_date}' and '${card_cvv}'
-    verify_payment.Payment_Verifier.provide_payment_details    ${card_number}    ${card_expiration_date}    ${card_cvv}
+    verify_payment.PaymentVerifier.provide_payment_details    ${card_number}    ${card_expiration_date}    ${card_cvv}
 I should get payment declined message
-    verify_payment.Payment_Verifier.check_payment_result
+    verify_payment.PaymentVerifier.check_payment_result

@@ -11,7 +11,7 @@ from Resources.page_go_to_checkout import GoToCheckout
 from Resources.page_payment import Payment
 import exceptions
 
-class Payment_Verifier():
+class PaymentVerifier():
     def __init__(self):
         logging.basicConfig(format="%(asctime)s %(levelname)s %(message)s",level=logging.DEBUG)
         self.url = configfile.url
@@ -79,13 +79,18 @@ class Payment_Verifier():
 
     @fun_call_decorator
     def check_payment_result(self):
-        logging.info('Checking if payment declined message appeared.')
-        result = self.payment_page.check_prompt()
-        assert result, 'Payment declined message not found.'
-        logging.info('Payment declined message found')
+        try:
+            logging.info('Checking if payment declined message appeared.')
+            result = self.payment_page.check_prompt()
+            assert result, 'Payment declined message not found.'
+            logging.info('Payment declined message found')
+        except:
+            logging.exception()
+        finally:
+            self.driver.close()
 
 if __name__ == '__main__':
-    ver = Payment_Verifier()
+    ver = PaymentVerifier()
     ver.fill_in_flight_details('DUB','SXF','15/05/2016','2','1')
     ver.provide_payment_details('5555555555555557','10/2018','123')
     ver.check_payment_result()
